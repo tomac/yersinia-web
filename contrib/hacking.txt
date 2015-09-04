@@ -1,0 +1,307 @@
+Introduction
+=============
+
+Actually, I want to participate in the Layer-II penetration testing tool called Yersinia, but first of all I want to get out how to hack on it, and add another protocol to the already included ones. I'll try to add VRRP in this stage, however this may be useful to add anoy other protocl you want
+As you may have noticed, yersinia has a modular architecture so that you can add you own protocols easily. If you ever tried to read the Snort preprocessors code before, you would know what I am talking about here.
+I have problesm in reading code that is written across zillions of .c and .h files, and I usually get lost there and cannot find where each function or structure is located. So I'll try to refer to them like this filename:function.
+Finally, I'd like to say that this is not a complete reference to the tool, and do not expect to be able to write your own module just after reading it. I also cannot guarantee that it is error free, so feel free to contact me or the developers team for any comments you have.
+
+Registering a Protocol
+=======================
+
+The fisrt step after creating vrrp.c and vrrp.h files, we need to register our new protocol so that Yersinia will be able to use the attacks we offer, and get the variables we use.
+Let's first have a look on the file called "protocols.c", and it's protocol_register_all function.
+
+void
+protocol_register_all(void)
+{
+    { extern void xstp_register(void);  xstp_register();  }
+    { extern void cdp_register(void);   cdp_register();   }
+    { extern void dtp_register(void);   dtp_register();   }
+    { extern void dhcp_register(void);  dhcp_register();  }
+    { extern void hsrp_register(void);  hsrp_register();  }
+    { extern void dot1q_register(void); dot1q_register(); }
+    { extern void isl_register(void);   isl_register();   }
+    { extern void vtp_register(void);   vtp_register();   }
+    { extern void arp_register(void);   arp_register();   }
+    { extern void dot1x_register(void); dot1x_register(); }
+    { extern void vrrp_register(void); vrrp_register(); }
+
+}
+
+We can see that this function call other functions, created by each protcol. So you will have to create a vrrp_register() in your "vrrp.c" file, which is going to look like this:
+
+void
+vrrp_register(void)
+{
+   protocol_register(PROTO_VRRP, "VRRP", "Virtual Router Redundancy Protocol", 
+         "vrrp", sizeof(struct vrrp_data), vrrp_init_attribs, NULL,
+         vrrp_get_printable_packet, vrrp_get_printable_store,
+         vrrp_load_values, vrrp_attack, 
+         vrrp_update_field, 
+         vrrp_features, vrrp_comm_params, SIZE_ARRAY(vrrp_comm_params), 
+         NULL, 0, NULL, vrrp_init_comms_struct, PROTO_VISIBLE, vrrp_end);
+}
+
+OMG, this one calls another one called protocol_register() which is written in the "protocols.c" file too.
+
+int8_t
+protocol_register(u_int8_t proto, const char *name, const char *desc,
+      const char *name_comm, u_int16_t size, init_attribs_t init,
+      learn_packet_t learn, get_printable_packet_t packet,
+      get_printable_store_t store, 
+      load_values_t load,
+      struct attack *attacks, 
+      update_field_t update_field, 
+      struct proto_features *features, 
+      struct commands_param *param, 
+      u_int8_t nparams, 
+      struct commands_param_extra *extra_parameters, 
+      u_int8_t extra_nparams, get_extra_field_t extra,
+      init_commands_struct_t init_commands, 
+      u_int8_t visible, 
+      end_t end)
+{
+	.....code.....
+}
+
+* proto: the protocol number. In our case we will put it PROTO_VRRP. Then we will add the following to protocol.h "#define PROTO_VRRP 10". We must also change "#define MAX_PROTOCOLS 10" to "#define MAX_PROTOCOLS 11" 
+* name, desc, and name_comm: its Name, Description, and another name :)
+* Size: The vrrp_data strucuture size. I think they will use it to malloc/calloc some space for you.
+* init: is a call back function to the one that will initialize the protocol attributes to their defaults, let me show you how it looks like here, and wrt terminal_defs.h:term_node i'll try to describe it later.
+int8_t
+vrrp_init_attribs(struct term_node *node)
+{
+   	.....code.....
+}
+* lern: callback to function that get's the packets from the wire, parse them, and put them in our structure (vrrp_data)
+int8_t
+vrrp_learn_packet(struct attacks *attacks, char *iface, u_int8_t *stop, void *data, struct pcap_pkthdr *header, struct pcap_data *pcap_aux)
+{
+   	.....code.....
+}
+* packet, and store are callback functions to display the date in a human readable format
+char **
+vrrp_get_printable_packet(struct pcap_data *data)
+{
+   	.....code.....
+}
+char **
+vrrp_get_printable_packet(struct pcap_data *data)
+{
+   	.....code.....
+}
+* load: callback to the function that parses the packets received (FIXME, what is the difference between vrrp_learn_packet and vrrp_load_values !?)
+int8_t
+vrrp_load_values(struct pcap_data *data, void *values)
+{
+   	.....code.....
+}
+* attacks: array of structures of the available attacks for this protocl, we will describe terminal_defs.h:attack later
+struct attack {
+       int16_t v;        /* value       */
+       char *s;          /* descr       */
+       int8_t type;      /* DoS attack? */
+       int8_t single;    /* Is only one packet or is a continous attack? */
+       void (*attack_th_launch)(void *);
+       const struct attack_param *param; /* Attack parameters */
+       u_int8_t nparams; /* How many parameters */
+};
+* update_field: seems that this is a callback function used to update the packet fields when the user enter a command line parameter, such as source ip address, destination mac, etc.
+int8_t 
+vrrp_update_field(int8_t state, struct term_node *node, void *value)
+{
+   	.....code.....
+}
+* features: I have no idea
+[protcols.h]
+struct proto_features {
+       int8_t field;
+       u_int32_t value;
+};
+* param, and nparams: structure for the command line parameters given to the user, and their default values etc.
+[protocols.h]
+struct commands_param {
+       u_int8_t id;      /* ID */
+       char     *desc;   /* Description */
+       char     *ldesc;  /* Long description */
+       u_int16_t size;   /* Size */
+       int32_t   min;    /* Minimal value */
+       int32_t   max;    /* Maximal value */
+       u_int8_t  type;   /* Type */
+       char     *help;   /* Help text */
+       char     *param;  /* Param text */
+       u_int16_t size_print; /* Allowed printable size */
+       u_int8_t  row;    /* Row where the field is displayed (ncurses and GTK) */
+       u_int8_t  mwindow; /* 1 if appears in mwindow, 0 if not */
+       int8_t  (*filter)(void *, void *, char *); /* Filtering function specific for protocol */
+       const struct tuple_type_desc *meaning; /* filed value description */
+};
+* extra_parameters, extra_nparams: extra parameters, leave them NULL and 0 for now
+* extra: hmmmmm, let it be NULL too
+* init_commands: According to Fredy and my bad spanish, it is call back function called from term_add_node() in order to assign temp values to the protocls.h:comm_param structure
+* visible: PROTO_VISIBLE for now
+* end: callback function to free pointers, clear buffers, etc for your protocol functions and data.
+
+Creating our protocol stuff
+============================
+As show earlier, the registration function takes many variables most of them are call back to other functions and structures, so we will now describe some of them in details:
+
+vrrp_data
+~~~~~~~~~~
+This is a structure that is used to store the protocol header and ethernet header data.
+Here is the arp.h:arp_data for example (see the ARP rfc for more details)
+struct arp_data { 
+	u_int16_t formathw;
+	u_int16_t formatproto;
+	u_int8_t lenhw;
+	u_int8_t lenproto;
+	u_int16_t op;
+   	/* Ethernet Data */
+    	u_int8_t mac_source[ETHER_ADDR_LEN];
+   	u_int8_t mac_dest[ETHER_ADDR_LEN];
+};
+
+vrrp_init_attribs()
+~~~~~~~~~~~~~~~~~~~~
+The attributes initialization fuction that we are going to create in vrrp.c file,
+vrrp_init_attribs(struct term_node *node)
+{
+   	.....code.....
+}
+This function takes one parameter "node", which is a pointer to the follwin structure:
+struct term_node { 
+       u_int8_t  up;       /* Terminal slot is in use?           */
+       u_int8_t  type;     /* Terminal type (CONSOLE, TTY, VTY)  */
+       u_int16_t number;   /* Terminal number                    */
+       u_int8_t  state;    /* Terminal state                     */
+       u_int32_t timeout;    /* Timeout                          */
+       char      username[MAX_USERNAME]; /* Username on terminal */
+       char      since[26];   /* User is logged in since...      */
+       char      from_ip[15]; /* IP user is connected from       */
+       u_int16_t from_port;   /* Port user is connected from     */
+       THREAD    thread;      /* Thread owner                    */
+       struct    pcap_file pcap_file;  /* Pcap file for ALL protocols */
+       list_t   *used_ints;
+       struct    protocol protocol[MAX_PROTOCOLS];
+       u_int8_t  mac_spoofing;
+       void     *specific;
+};
+Since this is a callback function, so it is not us who are going to fill these values, but they are going to be passed to us.
+So what is import now is that our function will fill the vrrp_data structure will its default values, such as protocl version numver, source and destination mac addresses etc.
+
+hsrp_get_printable_packet()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+char **
+hsrp_get_printable_packet(struct pcap_data *data)
+{
+	.....code.....
+	char **field_values = (char**) protocol_create_printable(protocols[PROTO_HSRP].nparams, 
+		protocols[PROTO_HSRP].parameters);
+	.....code.....
+}
+This function is used to write the packet fireld in human readable format, data is pointer to the packet captured. The point here is to create an array of strings to store your different filed/value data extracted from the packet as strings.
+
+vrrp_load_values()
+~~~~~~~~~~~~~~~~~~
+int8_t
+vrrp_load_values(struct pcap_data *data, void *values)
+{
+	.....code.....
+}
+It seems that this function is called everytime a packet is received, the data is pointer to the received packet, while data is pointer to a place in memory that you can use as your vrrp_data structure.
+So you are supposed to parse the packet and stores the values you want in your vrrp_data structure
+
+attack
+~~~~~~~
+struct attack {
+       int16_t v;        /* value       */
+       char *s;          /* descr       */
+       int8_t type;      /* DoS attack? */
+       int8_t single;    /* Is only one packet or is a continous attack? */
+       void (*attack_th_launch)(void *);
+       const struct attack_param *param; /* Attack parameters */
+       u_int8_t nparams; /* How many parameters */
+};
+This is what you have been waiting for since the beginning. It is simply the core of your module. Let's see part of the fot1q.h file for more details:
+
+#define DOT1Q_ATTACK_SEND   0
+#define DOT1Q_ATTACK_DOUBLE 1
+#define DOT1Q_ATTACK_POISON 2
+static struct attack dot1q_attack[] = {
+    { DOT1Q_ATTACK_SEND,   "sending 802.1Q packet",             NONDOS, SINGLE,    
+	dot1q_th_send,        NULL, 0           },
+    { DOT1Q_ATTACK_DOUBLE, "sending 802.1Q double enc. packet", NONDOS, SINGLE,    
+	dot1q_double_th_send, NULL, 0           },
+    { DOT1Q_ATTACK_POISON, "sending 802.1Q arp poisoning",      DOS,    CONTINOUS, 
+	dot1q_th_poison,      dot1q_arp_params, SIZE_ARRAY(dot1q_arp_params) },
+    { 0,                   NULL,                                0,      0, 
+};
+void dot1q_th_send(void *);
+void dot1q_th_send_exit(struct attacks *);
+void dot1q_double_th_send(void *);
+void dot1q_double_th_send_exit(struct attacks *);
+void dot1q_th_poison(void *);
+void dot1q_th_poison_exit(struct attacks *);
+
+As you can see, what is passed to the registration function is an array of the attack structure, that is why we have an array of structures here. Let's now describe the different fields there.
+- v: seems that this is an id for each attack: 0, 1, 3, etc.
+- s: some desctiption of the attack
+- type: is it a Denial of Service (DOS), or not
+- single: are we going to send one packet only (SINGLE), or flood (CONTINUOUS)
+- attack_th_launch: the function we are going to call, i.e. the function that will carry out this attack
+- param, nparams: optional parameters given and their count
+
+let's now take look at a parts of the dot1q.c and terminal-defs.h file:
+
+struct attacks {
+       u_int8_t  up;        /* active or not */
+       THREAD    attack_th;
+       THREAD    helper_th;
+       u_int16_t attack;    /* attack number */
+       list_t   *used_ints; /* interfaces used */
+       u_int8_t  mac_spoofing;
+       void     *data;      /* packet */
+       void     *params;    /* Parameters */
+       u_int8_t  nparams;   /* How many params */
+};
+
+void dot1q_th_send(void *arg){
+    struct attacks *attacks=NULL;
+    sigset_t mask;
+    struct dot1q_data *dot1q_data;
+    attacks = arg; 
+    pthread_mutex_lock(&attacks->attack_th.finished);
+    pthread_detach(pthread_self());
+    sigfillset(&mask);
+    if (pthread_sigmask(SIG_BLOCK, &mask, NULL))
+    {
+       thread_error("dot1q_th_send pthread_sigmask()",errno);
+       dot1q_th_send_exit(attacks);
+    }
+    dot1q_data = attacks->data;
+    dot1q_data->tpi1 = ETHERTYPE_VLAN;
+    dot1q_data->tpi2 = ETHERTYPE_IP;
+    dot1q_send_icmp(attacks,0);
+    dot1q_th_send_exit(attacks);
+}
+
+void dot1q_th_send_exit(struct attacks *attacks){
+    if (attacks) attack_th_exit(attacks);
+    pthread_mutex_unlock(&attacks->attack_th.finished);
+    pthread_exit(NULL);
+}
+
+int8_t
+dot1q_send_icmp(struct attacks *attacks, u_int8_t double_encap){
+	.....code.....
+}
+
+Note: the structure called attacks is totally different from the one called attack we talked about earlier.
+The attack structure is passed to our functioin (dot1q_th_send) and an argument (arg), this structure carries many useful info such as the thred-id (each attack is carried in a seperate thread), dot1q_data (data), the parameters params and nparams, etc. The dot1q_th_send() may now do some mutex (your mother has sure warned you that threads may case race conditions), then it detaches the thread, calls "dot1q_send_icmp(attacks,0)", this is the function that is going to do the nasty libnet packet forging and then it calls "dot1q_th_send_exit(attacks)".
+
+About Author:
+==============
+Tarek Amr, AKA gr33ndata
+http://gr33ndata.blogspot.com/
+

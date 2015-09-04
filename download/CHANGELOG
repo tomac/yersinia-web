@@ -1,0 +1,568 @@
+------------------------------------------------------------------------
+r48 | slay | 2007-05-08 11:41:17 +0200 (Tue, 08 May 2007) | 2 lines
+Changed paths:
+   D /yersinia/src/Makefile
+   D /yersinia/src/Makefile.in
+   D /yersinia/src/config.h
+   D /yersinia/src/config.h.in
+   M /yersinia/src/gtk-callbacks.c
+
+Removed unnecessary files, fixed use of deprecated min and max fields on gtk-callbacks
+
+------------------------------------------------------------------------
+r47 | slay | 2007-05-08 11:33:55 +0200 (Tue, 08 May 2007) | 2 lines
+Changed paths:
+   D /yersinia/Makefile
+   D /yersinia/Makefile.in
+   D /yersinia/config.log
+   D /yersinia/config.status
+   D /yersinia/configure
+
+Removed some files
+
+------------------------------------------------------------------------
+r46 | slay | 2007-05-08 11:13:30 +0200 (Tue, 08 May 2007) | 2 lines
+Changed paths:
+   M /yersinia/ChangeLog
+   M /yersinia/src/arp.h
+   M /yersinia/src/attack.c
+   M /yersinia/src/attack.h
+   M /yersinia/src/cdp.h
+   M /yersinia/src/commands.c
+   M /yersinia/src/commands.h
+   M /yersinia/src/dhcp.c
+   M /yersinia/src/dhcp.h
+   M /yersinia/src/dot1q.h
+   M /yersinia/src/dot1x.h
+   M /yersinia/src/dtp.h
+   M /yersinia/src/hsrp.c
+   M /yersinia/src/hsrp.h
+   M /yersinia/src/interfaces.c
+   M /yersinia/src/interfaces.h
+   M /yersinia/src/isl.h
+   M /yersinia/src/mpls.c
+   M /yersinia/src/mpls.h
+   M /yersinia/src/ncurses-callbacks.c
+   M /yersinia/src/ncurses-interface.c
+   M /yersinia/src/parser.c
+   M /yersinia/src/parser.h
+   M /yersinia/src/protocols.h
+   M /yersinia/src/terminal-defs.h
+   M /yersinia/src/terminal.c
+   M /yersinia/src/terminal.h
+   M /yersinia/src/vtp.h
+   M /yersinia/src/xstp.h
+   M /yersinia/src/yersinia.conf
+
+Changed e-mail addresses, fixed coredump on ncurses interface window.
+
+------------------------------------------------------------------------
+r44 | slay | 2007-04-27 13:17:52 +0200 (Fri, 27 Apr 2007) | 2 lines
+Changed paths:
+   A /yersinia/src/mpls.c
+   A /yersinia/src/mpls.h
+
+MPLS protocol
+
+------------------------------------------------------------------------
+r43 | slay | 2007-04-27 13:07:17 +0200 (Fri, 27 Apr 2007) | 4 lines
+Changed paths:
+   M /yersinia/AUTHORS
+   M /yersinia/ChangeLog
+   M /yersinia/FAQ
+   M /yersinia/INSTALL
+   M /yersinia/aclocal.m4
+   M /yersinia/configure.in
+   M /yersinia/src/Makefile.am
+   M /yersinia/src/admin.c
+   M /yersinia/src/admin.h
+   M /yersinia/src/arp.c
+   M /yersinia/src/arp.h
+   M /yersinia/src/attack.c
+   M /yersinia/src/attack.h
+   M /yersinia/src/cdp.c
+   M /yersinia/src/cdp.h
+   M /yersinia/src/commands-struct.h
+   M /yersinia/src/commands.c
+   M /yersinia/src/commands.h
+   M /yersinia/src/dhcp.c
+   M /yersinia/src/dhcp.h
+   M /yersinia/src/dlist.c
+   M /yersinia/src/dlist.h
+   M /yersinia/src/dot1q.c
+   M /yersinia/src/dot1q.h
+   M /yersinia/src/dot1x.c
+   M /yersinia/src/dot1x.h
+   M /yersinia/src/dtp.c
+   M /yersinia/src/dtp.h
+   M /yersinia/src/global.h
+   M /yersinia/src/gtk-callbacks.c
+   M /yersinia/src/gtk-callbacks.h
+   M /yersinia/src/gtk-gui.h
+   M /yersinia/src/gtk-interface.c
+   M /yersinia/src/gtk-interface.h
+   M /yersinia/src/gtk-support.c
+   M /yersinia/src/gtk-support.h
+   M /yersinia/src/hsrp.c
+   M /yersinia/src/hsrp.h
+   M /yersinia/src/interfaces.c
+   M /yersinia/src/interfaces.h
+   M /yersinia/src/isl.c
+   M /yersinia/src/isl.h
+   M /yersinia/src/md5-sum.c
+   M /yersinia/src/md5-sum.h
+   M /yersinia/src/ncurses-callbacks.c
+   M /yersinia/src/ncurses-callbacks.h
+   M /yersinia/src/ncurses-gui.c
+   M /yersinia/src/ncurses-gui.h
+   M /yersinia/src/ncurses-interface.c
+   M /yersinia/src/ncurses-interface.h
+   M /yersinia/src/parser.c
+   M /yersinia/src/parser.h
+   M /yersinia/src/protocols.c
+   M /yersinia/src/protocols.h
+   M /yersinia/src/terminal-defs.h
+   M /yersinia/src/terminal.c
+   M /yersinia/src/terminal.h
+   M /yersinia/src/thread-util.c
+   M /yersinia/src/thread-util.h
+   M /yersinia/src/vtp.c
+   M /yersinia/src/vtp.h
+   M /yersinia/src/xstp.c
+   M /yersinia/src/xstp.h
+   M /yersinia/src/yersinia.c
+   M /yersinia/src/yersinia.conf
+   M /yersinia/src/yersinia.h
+   M /yersinia/yersinia.8
+
+Added a rudimentary MPLS support... :)
+Changed mails and copyrights
+
+
+------------------------------------------------------------------------
+r37 | tomac | 2007-02-09 03:53:23 +0100 (Fri, 09 Feb 2007) | 1 line
+Changed paths:
+   M /yersinia/THANKS
+
+Updated THANKS
+------------------------------------------------------------------------
+r35 | tomac | 2007-02-09 03:35:45 +0100 (Fri, 09 Feb 2007) | 1 line
+Changed paths:
+   M /yersinia/ChangeLog
+   M /yersinia/FAQ
+
+FAQ updated
+------------------------------------------------------------------------
+r33 | tomac | 2007-02-09 03:25:15 +0100 (Fri, 09 Feb 2007) | 1 line
+Changed paths:
+   M /yersinia/Makefile
+   M /yersinia/Makefile.in
+   M /yersinia/aclocal.m4
+   M /yersinia/config.log
+   M /yersinia/config.status
+   M /yersinia/configure
+   M /yersinia/configure.in
+
+Fixed BSD BPF support
+------------------------------------------------------------------------
+r32 | tomac | 2007-02-09 03:24:59 +0100 (Fri, 09 Feb 2007) | 1 line
+Changed paths:
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/cdp.c
+   M /yersinia/src/config.h
+   M /yersinia/src/config.h.in
+   M /yersinia/src/dhcp.c
+   M /yersinia/src/interfaces.c
+
+Fixed BSD BPF support
+------------------------------------------------------------------------
+r31 | tomac | 2007-02-09 02:43:19 +0100 (Fri, 09 Feb 2007) | 1 line
+Changed paths:
+   M /yersinia/Makefile
+   M /yersinia/Makefile.in
+   M /yersinia/aclocal.m4
+   M /yersinia/config.log
+   M /yersinia/config.status
+   M /yersinia/configure
+   M /yersinia/configure.in
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/config.h
+   M /yersinia/src/interfaces.c
+
+Added BPF detection
+------------------------------------------------------------------------
+r22 | tomac | 2007-01-26 20:22:14 +0100 (Fri, 26 Jan 2007) | 1 line
+Changed paths:
+   M /yersinia/AUTHORS
+   M /yersinia/ChangeLog
+   M /yersinia/FAQ
+   M /yersinia/Makefile
+   M /yersinia/Makefile.in
+   M /yersinia/aclocal.m4
+   M /yersinia/config.log
+   M /yersinia/config.status
+   M /yersinia/configure
+   M /yersinia/configure.in
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/config.h
+   M /yersinia/src/config.h.in
+   M /yersinia/src/vtp.c
+   M /yersinia/yersinia.8
+
+Added VTP crash
+------------------------------------------------------------------------
+r21 | tomac | 2006-07-16 14:39:12 +0200 (Sun, 16 Jul 2006) | 1 line
+Changed paths:
+   M /yersinia/THANKS
+
+Added thanks to Mikel
+------------------------------------------------------------------------
+r20 | tomac | 2006-06-18 18:14:38 +0200 (Sun, 18 Jun 2006) | 1 line
+Changed paths:
+   M /htdocs/download.html
+   M /yersinia/Makefile
+   M /yersinia/config.log
+   M /yersinia/config.status
+   M /yersinia/configure
+   M /yersinia/configure.in
+   M /yersinia/src/Makefile
+   M /yersinia/src/config.h
+
+New version
+------------------------------------------------------------------------
+r18 | tomac | 2006-04-18 11:45:22 +0200 (Tue, 18 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/ncurses-interface.c
+
+more fixing tlv
+------------------------------------------------------------------------
+r17 | tomac | 2006-04-17 23:02:28 +0200 (Mon, 17 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/arp.c
+   M /yersinia/src/cdp.c
+   M /yersinia/src/cdp.h
+   M /yersinia/src/dhcp.c
+   M /yersinia/src/dot1q.c
+   M /yersinia/src/dot1x.c
+   M /yersinia/src/dtp.c
+   M /yersinia/src/hsrp.c
+   M /yersinia/src/isl.c
+   M /yersinia/src/ncurses-interface.c
+   M /yersinia/src/protocols.c
+   M /yersinia/src/protocols.h
+   M /yersinia/src/vtp.c
+   M /yersinia/src/xstp.c
+
+Trying to fix some ncurses tlv, but still on the go
+------------------------------------------------------------------------
+r16 | tomac | 2006-04-17 17:28:49 +0200 (Mon, 17 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/cdp.c
+   M /yersinia/src/cdp.h
+   M /yersinia/src/ncurses-callbacks.c
+   M /yersinia/src/ncurses-interface.c
+   M /yersinia/src/protocols.h
+
+Fixing tlv values in ncurses
+------------------------------------------------------------------------
+r15 | tomac | 2006-04-10 22:42:06 +0200 (Mon, 10 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/config.log
+   M /yersinia/config.status
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/config.h
+   M /yersinia/src/config.h.in
+   M /yersinia/src/gtk-callbacks.c
+   M /yersinia/src/gtk-callbacks.h
+   M /yersinia/src/ncurses-gui.c
+   M /yersinia/src/terminal.h
+   M /yersinia/src/yersinia.c
+   M /yersinia/src/yersinia.conf
+
+Fixed reading configuration file
+------------------------------------------------------------------------
+r14 | tomac | 2006-04-10 22:37:51 +0200 (Mon, 10 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/parser.c
+   M /yersinia/src/parser.h
+
+test
+------------------------------------------------------------------------
+r13 | tomac | 2006-04-10 21:58:55 +0200 (Mon, 10 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/config.h
+
+fixed reading configuration file
+------------------------------------------------------------------------
+r12 | tomac | 2006-04-10 21:55:31 +0200 (Mon, 10 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/gtk-gui.c
+
+fixed reading configuration file
+------------------------------------------------------------------------
+r11 | slay | 2006-04-04 19:10:14 +0200 (Tue, 04 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/config.h
+   M /yersinia/src/ncurses-callbacks.c
+   M /yersinia/src/vtp.c
+   M /yersinia/src/vtp.h
+
+VTP version
+------------------------------------------------------------------------
+r6 | slay | 2006-04-04 12:43:25 +0200 (Tue, 04 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/dot1q.h
+   M /yersinia/src/isl.c
+   M /yersinia/src/isl.h
+
+Added ISL fields
+------------------------------------------------------------------------
+r5 | slay | 2006-04-04 11:51:19 +0200 (Tue, 04 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/dtp.h
+   M /yersinia/src/isl.h
+   M /yersinia/src/vtp.c
+   M /yersinia/src/vtp.h
+
+FIxed VTP fields order
+------------------------------------------------------------------------
+r4 | slay | 2006-04-04 11:01:30 +0200 (Tue, 04 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/terminal.h
+
+More MOTD
+------------------------------------------------------------------------
+r3 | slay | 2006-04-04 10:57:59 +0200 (Tue, 04 Apr 2006) | 1 line
+Changed paths:
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/config.h
+   M /yersinia/src/config.h.in
+   M /yersinia/src/terminal.h
+
+ 
+------------------------------------------------------------------------
+r2 | tomac | 2006-04-03 23:04:25 +0200 (Mon, 03 Apr 2006) | 1 line
+Changed paths:
+   M /htdocs/about.html
+   M /htdocs/attacks.html
+   M /htdocs/default.css
+   M /htdocs/doc.html
+   M /htdocs/download.html
+   M /htdocs/faq.html
+   M /htdocs/index.html
+   M /htdocs/screenshots.html
+   M /yersinia/AUTHORS
+   M /yersinia/ChangeLog
+   M /yersinia/FAQ
+   M /yersinia/INSTALL
+   M /yersinia/Makefile
+   M /yersinia/Makefile.am
+   M /yersinia/Makefile.in
+   M /yersinia/README
+   M /yersinia/THANKS
+   M /yersinia/TODO
+   M /yersinia/configure.in
+   M /yersinia/src/Makefile
+   M /yersinia/src/Makefile.am
+   M /yersinia/src/Makefile.in
+   M /yersinia/src/admin.c
+   M /yersinia/src/admin.h
+   M /yersinia/src/arp.c
+   M /yersinia/src/arp.h
+   M /yersinia/src/attack.c
+   M /yersinia/src/attack.h
+   M /yersinia/src/cdp.c
+   M /yersinia/src/cdp.h
+   M /yersinia/src/commands-struct.h
+   M /yersinia/src/commands.c
+   M /yersinia/src/commands.h
+   M /yersinia/src/dhcp.c
+   M /yersinia/src/dhcp.h
+   M /yersinia/src/dlist.c
+   M /yersinia/src/dlist.h
+   M /yersinia/src/dot1q.c
+   M /yersinia/src/dot1q.h
+   M /yersinia/src/dot1x.h
+   M /yersinia/src/dtp.c
+   M /yersinia/src/dtp.h
+   M /yersinia/src/global.h
+   M /yersinia/src/gtk-callbacks.c
+   M /yersinia/src/gtk-callbacks.h
+   M /yersinia/src/gtk-gui.h
+   M /yersinia/src/gtk-interface.c
+   M /yersinia/src/gtk-interface.h
+   M /yersinia/src/gtk-support.c
+   M /yersinia/src/gtk-support.h
+   M /yersinia/src/hsrp.c
+   M /yersinia/src/hsrp.h
+   M /yersinia/src/interfaces.c
+   M /yersinia/src/interfaces.h
+   M /yersinia/src/isl.c
+   M /yersinia/src/isl.h
+   M /yersinia/src/md5-sum.c
+   M /yersinia/src/md5-sum.h
+   M /yersinia/src/md5.c
+   M /yersinia/src/md5.h
+   M /yersinia/src/ncurses-callbacks.c
+   M /yersinia/src/ncurses-callbacks.h
+   M /yersinia/src/ncurses-gui.c
+   M /yersinia/src/ncurses-gui.h
+   M /yersinia/src/ncurses-interface.c
+   M /yersinia/src/ncurses-interface.h
+   M /yersinia/src/parser.c
+   M /yersinia/src/parser.h
+   M /yersinia/src/protocols.c
+   M /yersinia/src/protocols.h
+   M /yersinia/src/terminal-defs.h
+   M /yersinia/src/terminal.c
+   M /yersinia/src/terminal.h
+   M /yersinia/src/thread-util.c
+   M /yersinia/src/thread-util.h
+   M /yersinia/src/vtp.c
+   M /yersinia/src/vtp.h
+   M /yersinia/src/xstp.c
+   M /yersinia/src/xstp.h
+   M /yersinia/src/yersinia.c
+   M /yersinia/src/yersinia.conf
+   M /yersinia/src/yersinia.h
+   M /yersinia/yersinia.8
+
+fixed id
+------------------------------------------------------------------------
+r1 | tomac | 2006-04-03 22:50:08 +0200 (Mon, 03 Apr 2006) | 1 line
+Changed paths:
+   A /htdocs
+   A /htdocs/about.html
+   A /htdocs/attacks.html
+   A /htdocs/default.css
+   A /htdocs/doc.html
+   A /htdocs/download.html
+   A /htdocs/faq.html
+   A /htdocs/images
+   A /htdocs/images/bodywrapgrad-reverse.gif
+   A /htdocs/images/bodywrapgrad.gif
+   A /htdocs/images/commandline-thumb.png
+   A /htdocs/images/commandline.png
+   A /htdocs/images/drumer.png
+   A /htdocs/images/gradient.jpg
+   A /htdocs/images/gui-thumb.png
+   A /htdocs/images/gui.png
+   A /htdocs/images/networkclient-thumb.png
+   A /htdocs/images/networkclient.png
+   A /htdocs/images/shadow-grid.gif
+   A /htdocs/images/shadow.png
+   A /htdocs/images/tomac.jpg
+   A /htdocs/images/yersinia-small.png
+   A /htdocs/images/yersinia.png
+   A /htdocs/index.html
+   A /htdocs/screenshots.html
+   A /htdocs/ydsf.css
+   A /htdocs/yersinia-0.5.6.tar.gz.asc
+   A /htdocs/yersinia.asc
+   A /yersinia
+   A /yersinia/AUTHORS
+   A /yersinia/COPYING
+   A /yersinia/ChangeLog
+   A /yersinia/FAQ
+   A /yersinia/INSTALL
+   A /yersinia/Makefile
+   A /yersinia/Makefile.am
+   A /yersinia/Makefile.in
+   A /yersinia/NEWS
+   A /yersinia/README
+   A /yersinia/THANKS
+   A /yersinia/TODO
+   A /yersinia/aclocal.m4
+   A /yersinia/autogen.sh
+   A /yersinia/borra
+   A /yersinia/config.guess
+   A /yersinia/config.log
+   A /yersinia/config.status
+   A /yersinia/config.sub
+   A /yersinia/configure
+   A /yersinia/configure.in
+   A /yersinia/install-sh
+   A /yersinia/missing
+   A /yersinia/mkinstalldirs
+   A /yersinia/pixmaps
+   A /yersinia/pixmaps/yersinia.png
+   A /yersinia/src
+   A /yersinia/src/Makefile
+   A /yersinia/src/Makefile.am
+   A /yersinia/src/Makefile.in
+   A /yersinia/src/admin.c
+   A /yersinia/src/admin.h
+   A /yersinia/src/arp.c
+   A /yersinia/src/arp.h
+   A /yersinia/src/attack.c
+   A /yersinia/src/attack.h
+   A /yersinia/src/cdp.c
+   A /yersinia/src/cdp.h
+   A /yersinia/src/commands-struct.h
+   A /yersinia/src/commands.c
+   A /yersinia/src/commands.h
+   A /yersinia/src/config.h
+   A /yersinia/src/config.h.in
+   A /yersinia/src/dhcp.c
+   A /yersinia/src/dhcp.h
+   A /yersinia/src/dlist.c
+   A /yersinia/src/dlist.h
+   A /yersinia/src/dot1q.c
+   A /yersinia/src/dot1q.h
+   A /yersinia/src/dot1x.c
+   A /yersinia/src/dot1x.h
+   A /yersinia/src/dtp.c
+   A /yersinia/src/dtp.h
+   A /yersinia/src/global.h
+   A /yersinia/src/gtk-callbacks.c
+   A /yersinia/src/gtk-callbacks.h
+   A /yersinia/src/gtk-gui.c
+   A /yersinia/src/gtk-gui.h
+   A /yersinia/src/gtk-interface.c
+   A /yersinia/src/gtk-interface.h
+   A /yersinia/src/gtk-support.c
+   A /yersinia/src/gtk-support.h
+   A /yersinia/src/hsrp.c
+   A /yersinia/src/hsrp.h
+   A /yersinia/src/interfaces.c
+   A /yersinia/src/interfaces.h
+   A /yersinia/src/isl.c
+   A /yersinia/src/isl.h
+   A /yersinia/src/md5-sum.c
+   A /yersinia/src/md5-sum.h
+   A /yersinia/src/md5.c
+   A /yersinia/src/md5.h
+   A /yersinia/src/ncurses-callbacks.c
+   A /yersinia/src/ncurses-callbacks.h
+   A /yersinia/src/ncurses-gui.c
+   A /yersinia/src/ncurses-gui.h
+   A /yersinia/src/ncurses-interface.c
+   A /yersinia/src/ncurses-interface.h
+   A /yersinia/src/parser.c
+   A /yersinia/src/parser.h
+   A /yersinia/src/protocols.c
+   A /yersinia/src/protocols.h
+   A /yersinia/src/stamp-h1
+   A /yersinia/src/terminal-defs.h
+   A /yersinia/src/terminal.c
+   A /yersinia/src/terminal.h
+   A /yersinia/src/thread-util.c
+   A /yersinia/src/thread-util.h
+   A /yersinia/src/vtp.c
+   A /yersinia/src/vtp.h
+   A /yersinia/src/xstp.c
+   A /yersinia/src/xstp.h
+   A /yersinia/src/yersinia.c
+   A /yersinia/src/yersinia.conf
+   A /yersinia/src/yersinia.h
+   A /yersinia/yersinia.8
+
+initial import
+------------------------------------------------------------------------
